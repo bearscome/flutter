@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
 class SecondMan extends StatelessWidget {
-  const SecondMan({super.key});
+  String name;
+  int age;
+  String gender;
+  bool isKorean;
+
+  SecondMan({this.name, this.age, this.gender, this.isKorean});
 
   @override
   Widget build(BuildContext context) {
@@ -9,8 +14,21 @@ class SecondMan extends StatelessWidget {
       appBar: AppBar(
         title: const Text("두번째 페이지 입니다"),
       ),
-      body: Container(
-        child: const Text("안녕하세요"),
+      body: Column(
+        children: [
+          Container(
+            child: Text(name ?? "안녕"),
+          ),
+          Container(
+            child: Text(name),
+          ),
+          Container(
+            child: Text(name),
+          ),
+          Container(
+            child: Text(name),
+          ),
+        ],
       ),
     );
   }

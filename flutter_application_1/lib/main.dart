@@ -30,8 +30,14 @@ class HeaderWidget extends StatelessWidget {
           GestureDetector(
             onTap: () {
               // 페이지 이동
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const SecondMan()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => SecondMan(
+                          name: '김아무개',
+                          age: 12,
+                          gender: '남자',
+                          isKorean: true)));
             },
             child: Container(
               color: Colors.pinkAccent,
