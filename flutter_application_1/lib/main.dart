@@ -31,18 +31,24 @@ class HeaderWidget extends StatelessWidget {
             height: 100,
             child: Column(
               children: [
-                Container(
-                  height: 33.3,
-                  color: Colors.purple,
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    color: Colors.purple,
+                  ),
                 ),
-                Container(
-                  height: 33.3,
-                  color: Colors.pink,
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    color: Colors.pink,
+                  ),
                 ),
-                Container(
-                  height: 33.3,
-                  color: Colors.yellow,
-                ),
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    color: Colors.yellow,
+                  ),
+                )
               ],
             ),
           ),
