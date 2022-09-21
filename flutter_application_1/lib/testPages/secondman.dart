@@ -7,7 +7,8 @@ class SecondMan extends StatelessWidget {
   bool isKorean;
 
   SecondMan(
-      {required this.name,
+      {super.key,
+      required this.name,
       required this.age,
       required this.gender,
       required this.isKorean});
@@ -20,18 +21,10 @@ class SecondMan extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Container(
-            child: Text(name),
-          ),
-          Container(
-            child: Text(age.toString()),
-          ),
-          Container(
-            child: Text(gender),
-          ),
-          Container(
-            child: Text(isKorean.toString()),
-          ),
+          Text(name),
+          Text(age.toString()),
+          Text(gender),
+          Text(isKorean.toString()),
         ],
       ),
     );
