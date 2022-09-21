@@ -34,10 +34,7 @@ class HeaderWidget extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) => SecondMan(
-                          name: '김아무개',
-                          age: 12,
-                          gender: '남자',
-                          isKorean: true)));
+                          name: '김아무개', age: 12, gender: '', isKorean: true)));
             },
             child: Container(
               color: Colors.pinkAccent,

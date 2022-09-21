@@ -6,7 +6,11 @@ class SecondMan extends StatelessWidget {
   String gender;
   bool isKorean;
 
-  SecondMan({this.name, this.age, this.gender, this.isKorean});
+  SecondMan(
+      {required this.name,
+      required this.age,
+      required this.gender,
+      required this.isKorean});
 
   @override
   Widget build(BuildContext context) {
@@ -17,16 +21,16 @@ class SecondMan extends StatelessWidget {
       body: Column(
         children: [
           Container(
-            child: Text(name ?? "안녕"),
-          ),
-          Container(
             child: Text(name),
           ),
           Container(
-            child: Text(name),
+            child: Text(age.toString()),
           ),
           Container(
-            child: Text(name),
+            child: Text(gender),
+          ),
+          Container(
+            child: Text(isKorean.toString()),
           ),
         ],
       ),
