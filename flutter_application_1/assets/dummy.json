@@ -1,0 +1,19 @@
+{
+    "area": ["서울", "부산"],
+    "items": [
+        {
+            "itemTitle":"고장난 모니터", 
+            "area": "서울 1동", 
+            "price":13000, 
+            "chatCount":2, 
+            "jjimCount":2
+        },
+        {
+            "itemTitle":"고장난 키보드", 
+            "area": "서울 2동", 
+            "price":15000, 
+            "chatCount":2, 
+            "jjimCount":2
+        }
+    ]
+}
