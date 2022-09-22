@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/testPages/secondman.dart';
+import 'package:get/get.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,7 +11,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return const GetMaterialApp(
       home: HeaderWidget(),
     );
   }
@@ -30,11 +31,16 @@ class HeaderWidget extends StatelessWidget {
           GestureDetector(
             onTap: () {
               // 페이지 이동
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => SecondMan(
-                          name: '김아무개', age: 12, gender: '', isKorean: true)));
+              Get.to(SecondMan(
+                  name: '김아무개', age: 12, gender: '남자', isKorean: true));
+              // Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (context) => SecondMan(
+              //             name: '김아무개',
+              //             age: 12,
+              //             gender: '남자',
+              //             isKorean: true)));
             },
             child: Container(
               color: Colors.pinkAccent,
