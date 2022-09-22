@@ -150,7 +150,7 @@ class Carret extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.all(5),
+              padding: EdgeInsets.all(10),
               color: Colors.blue,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -176,6 +176,30 @@ class Carret extends StatelessWidget {
                   color: Colors.white,
                   child: Items(),
                 ),
+              ),
+            ),
+            Container(
+              alignment: Alignment.center,
+              padding: EdgeInsets.all(10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    children: [Icon(Icons.home), Text('홈')],
+                  ),
+                  Column(
+                    children: [Icon(Icons.business), Text('동네생활')],
+                  ),
+                  Column(
+                    children: [Icon(Icons.public), Text('내근처')],
+                  ),
+                  Column(
+                    children: [Icon(Icons.forum_outlined), Text('채팅')],
+                  ),
+                  Column(
+                    children: [Icon(Icons.person), Text('나의당근')],
+                  ),
+                ],
               ),
             )
           ],
