@@ -35,7 +35,55 @@ final _items = [
     "chatCount": 2,
     "jjimCount": 1,
     "image": 'assets/67565847.png'
-  }
+  },
+  {
+    "itemTitle": "없어 나가",
+    "area": "서울 3동",
+    "price": 0,
+    "chatCount": 2,
+    "jjimCount": 1,
+    "image": 'assets/67565847.png'
+  },
+  {
+    "itemTitle": "없어 나가",
+    "area": "서울 3동",
+    "price": 0,
+    "chatCount": 2,
+    "jjimCount": 1,
+    "image": 'assets/67565847.png'
+  },
+  {
+    "itemTitle": "없어 나가",
+    "area": "서울 3동",
+    "price": 0,
+    "chatCount": 2,
+    "jjimCount": 1,
+    "image": 'assets/67565847.png'
+  },
+  {
+    "itemTitle": "없어 나가",
+    "area": "서울 3동",
+    "price": 0,
+    "chatCount": 2,
+    "jjimCount": 1,
+    "image": 'assets/67565847.png'
+  },
+  {
+    "itemTitle": "없어 나가",
+    "area": "서울 3동",
+    "price": 0,
+    "chatCount": 2,
+    "jjimCount": 1,
+    "image": 'assets/67565847.png'
+  },
+  {
+    "itemTitle": "없어 나가",
+    "area": "서울 3동",
+    "price": 0,
+    "chatCount": 2,
+    "jjimCount": 1,
+    "image": 'assets/67565847.png'
+  },
 ];
 
 class MyApp extends StatelessWidget {
@@ -43,8 +91,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Carret(),
+    return MaterialApp(
+      home: CarretStatus(),
       // home: HeaderWidget(),
     );
   }
@@ -81,67 +129,149 @@ class _DropMenuStatus extends State<DropDownButton> {
   }
 }
 
-class Items extends StatelessWidget {
+class TopLayOut extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: _items
-          .map((item) => GestureDetector(
-                child: Row(
-                  children: [
-                    Image(
-                      image: AssetImage(item['image'] as String),
-                      width: 80,
-                      height: 80,
-                      fit: BoxFit.cover,
-                    ),
-                    Expanded(
-                      child: Container(
-                        color: Colors.red,
-                        padding: EdgeInsets.only(left: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(item['itemTitle'] as String),
-                            Text(item['area'] as String),
-                            Text(item['price'].toString()),
-                            Container(
-                              padding: EdgeInsets.only(right: 10),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Icon(Icons.forum_outlined),
-                                  Text(item['chatCount'].toString()),
-                                  Icon(Icons.favorite_border),
-                                  Text(item['jjimCount'].toString()),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Detail(
-                        itemTitle: item['itemTitle'] as String,
-                        area: item['area'] as String,
-                        price: item['price'] as int,
-                        chatCount: item['chatCount'] as int,
-                        jjimCount: item['jjimCount'] as int,
-                      ),
-                    )),
-              ))
-          .toList(),
+    return Container(
+      padding: EdgeInsets.all(10),
+      color: Colors.blue,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          DropDownButton(),
+          Container(
+            child: Row(
+              children: [
+                Icon(Icons.search),
+                Icon(Icons.menu),
+                Icon(Icons.notifications),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }
 
-class Carret extends StatelessWidget {
-  const Carret({super.key});
+class BottomLayOut extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.center,
+      padding: EdgeInsets.all(10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            children: [Icon(Icons.home), Text('홈')],
+          ),
+          Column(
+            children: [Icon(Icons.business), Text('동네생활')],
+          ),
+          Column(
+            children: [Icon(Icons.public), Text('내근처')],
+          ),
+          Column(
+            children: [Icon(Icons.forum_outlined), Text('채팅')],
+          ),
+          Column(
+            children: [Icon(Icons.person), Text('나의당근')],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ListItems extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+        children: _items
+            .map((item) => GestureDetector(
+                  child: Row(
+                    children: [
+                      Image(
+                        image: AssetImage(item['image'] as String),
+                        width: 80,
+                        height: 80,
+                        fit: BoxFit.cover,
+                      ),
+                      Expanded(
+                        child: Container(
+                          color: Colors.red,
+                          padding: EdgeInsets.only(left: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(item['itemTitle'] as String),
+                              Text(item['area'] as String),
+                              Text(item['price'].toString()),
+                              Container(
+                                padding: EdgeInsets.only(right: 10),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Icon(Icons.forum_outlined),
+                                    Text(item['chatCount'].toString()),
+                                    Icon(Icons.favorite_border),
+                                    Text(item['jjimCount'].toString()),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Detail(
+                          itemTitle: item['itemTitle'] as String,
+                          area: item['area'] as String,
+                          price: item['price'] as int,
+                          chatCount: item['chatCount'] as int,
+                          jjimCount: item['jjimCount'] as int,
+                        ),
+                      )),
+                ))
+            .toList());
+  }
+}
+
+class CarretStatus extends StatefulWidget {
+  @override
+  State<CarretStatus> createState() => Carret();
+}
+
+class Carret extends State<CarretStatus> {
+  int selected = 0;
+
+  void tapped(int index) => {
+        setState(() {
+          selected = index;
+        })
+      };
+
+  var BodyTapList = [
+    Expanded(
+      child: Container(
+        padding: EdgeInsets.all(10),
+        color: Colors.green,
+        child: Container(
+          color: Colors.white,
+          child: ListItems(),
+        ),
+      ),
+    ),
+    Text('2'),
+    Text('3'),
+    Text('4'),
+    Text('5')
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -149,134 +279,40 @@ class Carret extends StatelessWidget {
       body: Container(
         child: Column(
           children: [
-            Container(
-              padding: EdgeInsets.all(10),
-              color: Colors.blue,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  DropDownButton(),
-                  Container(
-                    child: Row(
-                      children: [
-                        Icon(Icons.search),
-                        Icon(Icons.menu),
-                        Icon(Icons.notifications),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.all(10),
-                color: Colors.green,
-                child: Container(
-                  color: Colors.white,
-                  child: Items(),
-                ),
-              ),
-            ),
-            Container(
-              alignment: Alignment.center,
-              padding: EdgeInsets.all(10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    children: [Icon(Icons.home), Text('홈')],
-                  ),
-                  Column(
-                    children: [Icon(Icons.business), Text('동네생활')],
-                  ),
-                  Column(
-                    children: [Icon(Icons.public), Text('내근처')],
-                  ),
-                  Column(
-                    children: [Icon(Icons.forum_outlined), Text('채팅')],
-                  ),
-                  Column(
-                    children: [Icon(Icons.person), Text('나의당근')],
-                  ),
-                ],
-              ),
-            )
+            TopLayOut(),
+            BodyTapList.elementAt(selected)
+            // BottomLayOutState() // 커스텀 버튼
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: "홈",
+              backgroundColor: Colors.black),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.business),
+              label: "동네생활",
+              backgroundColor: Colors.black),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.public),
+              label: "내근처",
+              backgroundColor: Colors.black),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.forum_outlined),
+              label: "채팅",
+              backgroundColor: Colors.black),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: "나의당근",
+              backgroundColor: Colors.black),
+        ],
+        // backgroundColor: Colors.blue,
+        fixedColor: Colors.white,
+        currentIndex: selected,
+        onTap: (value) => tapped(value),
       ),
     );
   }
 }
-
-// class HeaderWidget extends StatelessWidget {
-//   const HeaderWidget({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('안녕'),
-//       ),
-//       body: Row(
-//         children: [
-//           GestureDetector(
-//             onTap: () {
-//               // 페이지 이동
-//               Get.to(SecondMan(
-//                   name: '김아무개', age: 12, gender: '남자', isKorean: true));
-//               // Navigator.push(
-//               //     context,
-//               //     MaterialPageRoute(
-//               //         builder: (context) => SecondMan(
-//               //             name: '김아무개',
-//               //             age: 12,
-//               //             gender: '남자',
-//               //             isKorean: true)));
-//             },
-//             child: Container(
-//               color: Colors.pinkAccent,
-//               child: const Text("여기를 누르세요"),
-//             ),
-//           ),
-//           SizedBox(
-//             width: 100,
-//             height: 100,
-//             child: Column(
-//               children: [
-//                 Expanded(
-//                   flex: 1,
-//                   child: Container(
-//                     color: Colors.purple,
-//                   ),
-//                 ),
-//                 Expanded(
-//                   flex: 1,
-//                   child: Container(
-//                     color: Colors.pink,
-//                   ),
-//                 ),
-//                 Expanded(
-//                   flex: 1,
-//                   child: Container(
-//                     color: Colors.yellow,
-//                   ),
-//                 )
-//               ],
-//             ),
-//           ),
-//           Container(
-//             width: 100,
-//             height: 100,
-//             color: Colors.green,
-//           ),
-//           Container(
-//             width: 100,
-//             height: 100,
-//             color: Colors.blue,
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
