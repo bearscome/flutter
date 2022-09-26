@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class SecondMan extends StatelessWidget {
-  String name;
-  int age;
-  String gender;
-  bool isKorean;
+  final String name;
+  final int age;
+  final String gender;
+  final bool isKorean;
 
-  SecondMan(
+  const SecondMan(
       {super.key,
       required this.name,
       required this.age,

@@ -1,9 +1,9 @@
-import 'dart:convert';
-import 'dart:async';
+// import 'dart:convert';
+// import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_application_1/testPages/secondman.dart';
-import 'package:get/get.dart';
+// import 'package:flutter/services.dart';
+// import 'package:flutter_application_1/testPages/secondman.dart';
+// import 'package:get/get.dart';
 import 'package:flutter_application_1/carretDetail/detail.dart';
 
 void main() {
@@ -91,7 +91,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: CarretStatus(),
       // home: HeaderWidget(),
     );
@@ -110,43 +110,42 @@ class _DropMenuStatus extends State<DropDownButton> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: DropdownButton(
-        value: dropDownValue,
-        items: _dropMenuList
-            .map((e) => DropdownMenuItem(
-                  value: e,
-                  child: Text(e),
-                ))
-            .toList(),
-        onChanged: (String? value) {
-          setState(() {
-            dropDownValue = value!;
-          });
-        },
-      ),
+    return DropdownButton(
+      value: dropDownValue,
+      items: _dropMenuList
+          .map((e) => DropdownMenuItem(
+                value: e,
+                child: Text(e),
+              ))
+          .toList(),
+      onChanged: (String? value) {
+        setState(() {
+          dropDownValue = value!;
+        });
+      },
     );
   }
 }
 
 class TopLayOut extends StatelessWidget {
+  const TopLayOut({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(10),
+      padding:
+          const EdgeInsets.fromLTRB(30, 40, 10, 0), //left, top, right, bottom
       color: Colors.blue,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          DropDownButton(),
-          Container(
-            child: Row(
-              children: [
-                Icon(Icons.search),
-                Icon(Icons.menu),
-                Icon(Icons.notifications),
-              ],
-            ),
+          const DropDownButton(),
+          Row(
+            children: const [
+              Icon(Icons.search),
+              Icon(Icons.menu),
+              Icon(Icons.notifications),
+            ],
           )
         ],
       ),
@@ -155,28 +154,30 @@ class TopLayOut extends StatelessWidget {
 }
 
 class BottomLayOut extends StatelessWidget {
+  const BottomLayOut({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(
-            children: [Icon(Icons.home), Text('홈')],
+            children: const [Icon(Icons.home), Text('홈')],
           ),
           Column(
-            children: [Icon(Icons.business), Text('동네생활')],
+            children: const [Icon(Icons.business), Text('동네생활')],
           ),
           Column(
-            children: [Icon(Icons.public), Text('내근처')],
+            children: const [Icon(Icons.public), Text('내근처')],
           ),
           Column(
-            children: [Icon(Icons.forum_outlined), Text('채팅')],
+            children: const [Icon(Icons.forum_outlined), Text('채팅')],
           ),
           Column(
-            children: [Icon(Icons.person), Text('나의당근')],
+            children: const [Icon(Icons.person), Text('나의당근')],
           ),
         ],
       ),
@@ -185,6 +186,8 @@ class BottomLayOut extends StatelessWidget {
 }
 
 class ListItems extends StatelessWidget {
+  const ListItems({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -201,7 +204,7 @@ class ListItems extends StatelessWidget {
                       Expanded(
                         child: Container(
                           color: Colors.red,
-                          padding: EdgeInsets.only(left: 10),
+                          padding: const EdgeInsets.only(left: 10),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -209,13 +212,13 @@ class ListItems extends StatelessWidget {
                               Text(item['area'] as String),
                               Text(item['price'].toString()),
                               Container(
-                                padding: EdgeInsets.only(right: 10),
+                                padding: const EdgeInsets.only(right: 10),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
-                                    Icon(Icons.forum_outlined),
+                                    const Icon(Icons.forum_outlined),
                                     Text(item['chatCount'].toString()),
-                                    Icon(Icons.favorite_border),
+                                    const Icon(Icons.favorite_border),
                                     Text(item['jjimCount'].toString()),
                                   ],
                                 ),
@@ -243,6 +246,8 @@ class ListItems extends StatelessWidget {
 }
 
 class CarretStatus extends StatefulWidget {
+  const CarretStatus({super.key});
+
   @override
   State<CarretStatus> createState() => Carret();
 }
@@ -256,34 +261,32 @@ class Carret extends State<CarretStatus> {
         })
       };
 
-  var BodyTapList = [
+  var bodyTapList = [
     Expanded(
       child: Container(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         color: Colors.green,
         child: Container(
           color: Colors.white,
-          child: ListItems(),
+          child: const ListItems(),
         ),
       ),
     ),
-    Text('2'),
-    Text('3'),
-    Text('4'),
-    Text('5')
+    const Text('2'),
+    const Text('3'),
+    const Text('4'),
+    const Text('5')
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Column(
-          children: [
-            TopLayOut(),
-            BodyTapList.elementAt(selected)
-            // BottomLayOutState() // 커스텀 버튼
-          ],
-        ),
+      body: Column(
+        children: [
+          const TopLayOut(),
+          bodyTapList.elementAt(selected)
+          // BottomLayOutState() // 커스텀 버튼
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
