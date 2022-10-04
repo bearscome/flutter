@@ -1,10 +1,13 @@
 // import 'dart:convert';
 // import 'dart:async';
+import 'dart:convert';
+// import 'dart:html';
 import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
 // import 'package:flutter_application_1/testPages/secondman.dart';
 // import 'package:get/get.dart';
 import 'package:flutter_application_1/carretDetail/detail.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(const MyApp());
@@ -128,13 +131,15 @@ class _DropMenuStatus extends State<DropDownButton> {
 }
 
 class TopLayOut extends StatelessWidget {
-  const TopLayOut({super.key});
+  final double width;
+  final double b = 3.0;
+  const TopLayOut({super.key, required this.width});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding:
-          const EdgeInsets.fromLTRB(30, 40, 10, 0), //left, top, right, bottom
+          const EdgeInsets.fromLTRB(3.0, 40, 10, 0), //left, top, right, bottom
       color: Colors.blue,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -283,7 +288,7 @@ class Carret extends State<CarretStatus> {
     return Scaffold(
       body: Column(
         children: [
-          const TopLayOut(),
+          const TopLayOut(width: 3.0),
           bodyTapList.elementAt(selected)
           // BottomLayOutState() // 커스텀 버튼
         ],
