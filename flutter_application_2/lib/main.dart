@@ -60,21 +60,36 @@ class MyHomePage extends StatelessWidget {
           ],
         ),
       ),
-      body: Builder(builder: (context) {
-        return ElevatedButton(
-          onPressed: () {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text('하이'),
-            ));
-          },
-          child: const Text(
-            "SHOW ME",
-            style: TextStyle(color: Colors.white),
-          ),
-          style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.red)),
-        );
-      }),
+      body: MySnackBar(),
+    );
+  }
+}
+
+class MySnackBar extends StatelessWidget {
+  const MySnackBar({super.key});
+  /*
+    Scaffold.of() -> MySnackBar에서 부모 위젯은 MyHomePage의 Scaffold를 찾았다.
+
+  */
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: ElevatedButton(
+        child: Text('hi@'),
+        onPressed: () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text(
+                'hello',
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.white),
+              ),
+              backgroundColor: Colors.teal,
+              duration: Duration(milliseconds: 500),
+            ),
+          );
+        },
+      ),
     );
   }
 }
