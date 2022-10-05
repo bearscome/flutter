@@ -1,16 +1,48 @@
-# flutter_application_1
+# Scaffold
+appBar: AppBar(
+    title: const Text('하이'), // 상단 타이틀
+    
+    centerTitle: true // 중앙 위치,
+    
+    // leading: IconButton( // 왼쪽 버튼
+    //   icon: Icon(Icons.menu),
+    //   onPressed: () => print('hi'),
+    // ),
+    // 
+    actions: [ // 오른쪽 버튼 들
+        IconButton(
+            icon: Icon(Icons.mail),
+            onPressed: () => print('안녕'),
+        )
+    ],
+)
 
-A new Flutter project.
+ drawer: Drawer( // 왼쪽 버튼 마이 상세보기 같은 기능 
+    child: ListView(
+        children: [
+        UserAccountsDrawerHeader(
+            currentAccountPicture: CircleAvatar(
+                // backgroundImage: AssetImage(''),
+                ),
+            accountName: Text('accountName'),
+            accountEmail: Text('accountEmail'),
+            onDetailsPressed: () => print('하이'),
+            otherAccountsPictures: [
+            CircleAvatar(
+                backgroundColor: Colors.red,
+            ),
+            ],
+        ),
+        ListTile(
+            leading: Icon(Icons.media_bluetooth_off),
+            title: Text('home'),
+            onTap: () => print('hi'),
+            trailing: Icon(Icons.add),
+        ),
+        ],
+    ),
+),
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# BuildContext
+ - widget tree에서 현재 widget의 위치를 알 수 있는 정보
+ - context 인자 값을 통해 widget을 리턴함
