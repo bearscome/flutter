@@ -46,3 +46,8 @@ appBar: AppBar(
 # BuildContext
  - widget tree에서 현재 widget의 위치를 알 수 있는 정보
  - context 인자 값을 통해 widget을 리턴함
+
+# scaffold.of(context) 
+ - of메소드는 현재 자신에서 부모까지 제일 가까운 scaffold를 찾는 메소드 이다.
+ - Theme.of(context): 현재 자신에서 부모까지 제일 가까운 Theme를 찾는다.
+ - scaffold.of(context)를 사용할 때 buildcontex기준으로 찾는데, 현재 위젯의 부모가 scaffold가 없다면, Builder함수를 선언하여 현재 위젯에서 Builder하여 상위 widget에 있는 scaffold를 참조 할 수 있다.

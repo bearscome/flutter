@@ -60,15 +60,21 @@ class MyHomePage extends StatelessWidget {
           ],
         ),
       ),
-      body: Center(
-        child: Column(
-          children: const <Widget>[
-            Text('안녕'),
-            Text('안녕'),
-            Text('안녕'),
-          ],
-        ),
-      ),
+      body: Builder(builder: (context) {
+        return ElevatedButton(
+          onPressed: () {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text('하이'),
+            ));
+          },
+          child: const Text(
+            "SHOW ME",
+            style: TextStyle(color: Colors.white),
+          ),
+          style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.red)),
+        );
+      }),
     );
   }
 }
