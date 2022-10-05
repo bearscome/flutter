@@ -1,4 +1,7 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 void main() => runApp(const MyApp());
 
@@ -24,72 +27,24 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('하이'),
         centerTitle: true,
-        // leading: IconButton(
-        //   icon: Icon(Icons.menu),
-        //   onPressed: () => print('hi'),
-        // ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.mail),
-            onPressed: () => print('안녕'),
-          )
-        ],
       ),
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            UserAccountsDrawerHeader(
-              currentAccountPicture: CircleAvatar(
-                  // backgroundImage: AssetImage(''),
-                  ),
-              accountName: Text('accountName'),
-              accountEmail: Text('accountEmail'),
-              onDetailsPressed: () => print('하이'),
-              otherAccountsPictures: [
-                CircleAvatar(
-                  backgroundColor: Colors.red,
-                ),
-              ],
-            ),
-            ListTile(
-              leading: Icon(Icons.media_bluetooth_off),
-              title: Text('home'),
-              onTap: () => print('hi'),
-              trailing: Icon(Icons.add),
-            ),
-          ],
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () => fluuterToast(),
+          child: Text('data'),
         ),
       ),
-      body: MySnackBar(),
     );
   }
 }
 
-class MySnackBar extends StatelessWidget {
-  const MySnackBar({super.key});
-  /*
-    Scaffold.of() -> MySnackBar에서 부모 위젯은 MyHomePage의 Scaffold를 찾았다.
-
-  */
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: ElevatedButton(
-        child: Text('hi@'),
-        onPressed: () {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text(
-                'hello',
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.white),
-              ),
-              backgroundColor: Colors.teal,
-              duration: Duration(milliseconds: 500),
-            ),
-          );
-        },
-      ),
-    );
-  }
+void fluuterToast() {
+  Fluttertoast.showToast(
+    msg: 'msg',
+    gravity: ToastGravity.BOTTOM_LEFT,
+    backgroundColor: Colors.redAccent,
+    fontSize: 20.0,
+    textColor: Colors.black,
+    toastLength: Toast.LENGTH_SHORT,
+  );
 }
