@@ -58,4 +58,5 @@ appBar: AppBar(
  - Navigaotr함수를 사용한다
     -- push(context, route)
         --- context는 위젯 트리의 위치정보를 근거하여 현재 화면상의 보여지는 페이지가 어떤페이지인지 확인하고 push함수가 이동하기 원하는 페이지를 쌓기 위함, Second Page를 쌓기위해 first Page의 정확한 위치를 알아야 하기 때문이다.
-        --- route는 이동할 페이지, MaterialPageRoute()
+        --- route는 이동할 페이지, MaterialPageRoute(builder:)
+            /// buulder는 reqiuer arg이다. 
