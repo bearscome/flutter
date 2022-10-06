@@ -1,20 +1,28 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-// import 'package:get/get.dart';
+import '../models/photo_model.dart';
+import 'package:http/http.dart' as http;
+
+Future<Album> _getPostDetail(int albumId) async {
+  final response = await http
+      .get(Uri.parse('https://jsonplaceholder.typicode.com/photos/$albumId'));
+
+  if (response.statusCode == 200) {
+    var jsonData = Album.fromJson(jsonDecode(response.body));
+    return jsonData;
+  } else {
+    throw Exception('Faild');
+  }
+}
 
 class Detail extends StatelessWidget {
-  final String itemTitle;
-  final String area;
-  final int price;
-  final int chatCount;
-  final int jjimCount;
+  final int albumId;
 
-  const Detail(
-      {super.key,
-      required this.itemTitle,
-      required this.area,
-      required this.price,
-      required this.chatCount,
-      required this.jjimCount});
+  const Detail({
+    super.key,
+    required this.albumId,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,45 +30,56 @@ class Detail extends StatelessWidget {
       appBar: AppBar(
         title: const Text("상품정보"),
       ),
-      body: Column(
-        children: [
-          Text(itemTitle),
-          Text(area),
-          Text(price.toString()),
-          Text(chatCount.toString()),
-          Text(jjimCount.toString()),
-        ],
+      body: Center(
+        child: DetailWidget(albumId: albumId),
       ),
     );
   }
 }
 
-//
-// class SimpleController extends GetxController {
-//   int counter = 0;
+class DetailWidget extends StatefulWidget {
+  final int albumId;
+  const DetailWidget({super.key, required this.albumId});
 
-//   void increase() {
-//     counter++;
-//     update();
-//   }
-// }
+  @override
+  State<DetailWidget> createState() => _DetailWidgetState(albumId: albumId);
+}
 
-// class MyHomePage extends StatelessWidget {
-//   const MyHomePage({super.key});
+class _DetailWidgetState extends State<DetailWidget> {
+  _DetailWidgetState({required this.albumId});
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('단순 상태관리 테스트'),
-//       ),
-//       body: Center(child: GetBuilder<SimpleController>(builder: (controller) {
-//         return ElevatedButton(
-//             onPressed: () {
-//               controller.increase();
-//             },
-//             child: Text('현재숫자:${controller.counter}'));
-//       })),
-//     );
-//   }
-// }
+  final int albumId;
+  late Future<Album> detailAlbum;
+
+  @override
+  void initState() {
+    super.initState();
+    detailAlbum = _getPostDetail(albumId);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<Album>(
+      future: detailAlbum,
+      builder: (context, snapshot) {
+        String title = snapshot.data!.title;
+        String url = snapshot.data!.url;
+
+        if (snapshot.hasData) {
+          return Column(
+            children: [
+              Image(
+                image: NetworkImage(url),
+              ),
+              Text(title),
+            ],
+          );
+        } else if (snapshot.hasError) {
+          return Text('${snapshot.hasError}');
+        }
+
+        return const Center(child: CircularProgressIndicator());
+      },
+    );
+  }
+}

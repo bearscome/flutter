@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/carretDetail/detail.dart';
+import 'models/photo_model.dart';
 import 'package:http/http.dart' as http;
 
 void main() {
@@ -8,121 +9,16 @@ void main() {
 }
 
 final _dropMenuList = ["서울", "부산"];
-// final _items = [
-//   {
-//     "itemTitle": "고장난 모니터",
-//     "area": "서울 1동",
-//     "price": 13000,
-//     "chatCount": 1,
-//     "jjimCount": 2,
-//     "image": 'assets/67565847.png'
-//   },
-//   {
-//     "itemTitle": "고장난 키보드",
-//     "area": "서울 2동",
-//     "price": 15000,
-//     "chatCount": 2,
-//     "jjimCount": 1,
-//     "image": 'assets/67565847.png'
-//   },
-//   {
-//     "itemTitle": "없어 나가",
-//     "area": "서울 3동",
-//     "price": 0,
-//     "chatCount": 2,
-//     "jjimCount": 1,
-//     "image": 'assets/67565847.png'
-//   },
-//   {
-//     "itemTitle": "없어 나가",
-//     "area": "서울 3동",
-//     "price": 0,
-//     "chatCount": 2,
-//     "jjimCount": 1,
-//     "image": 'assets/67565847.png'
-//   },
-//   {
-//     "itemTitle": "없어 나가",
-//     "area": "서울 3동",
-//     "price": 0,
-//     "chatCount": 2,
-//     "jjimCount": 1,
-//     "image": 'assets/67565847.png'
-//   },
-//   {
-//     "itemTitle": "없어 나가",
-//     "area": "서울 3동",
-//     "price": 0,
-//     "chatCount": 2,
-//     "jjimCount": 1,
-//     "image": 'assets/67565847.png'
-//   },
-//   {
-//     "itemTitle": "없어 나가",
-//     "area": "서울 3동",
-//     "price": 0,
-//     "chatCount": 2,
-//     "jjimCount": 1,
-//     "image": 'assets/67565847.png'
-//   },
-//   {
-//     "itemTitle": "없어 나가",
-//     "area": "서울 3동",
-//     "price": 0,
-//     "chatCount": 2,
-//     "jjimCount": 1,
-//     "image": 'assets/67565847.png'
-//   },
-//   {
-//     "itemTitle": "없어 나가",
-//     "area": "서울 3동",
-//     "price": 0,
-//     "chatCount": 2,
-//     "jjimCount": 1,
-//     "image": 'assets/67565847.png'
-//   },
-// ];
 
-class Posts {
-  late int userId;
-  late int id;
-  late String title;
-  late bool completed;
-
-  Posts(
-      {required this.completed,
-      required this.id,
-      required this.title,
-      required this.userId});
-
-  Posts.fromJson(Map<String, dynamic> json) {
-    completed = json['completed'];
-    id = json['id'];
-    title = json['title'];
-    userId = json['userId'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['completed'] = completed;
-    data['id'] = id;
-    data['title'] = title;
-    data['userId'] = userId;
-
-    return data;
-  }
-}
-
-Future<List<Posts>> getPosts() async {
+Future<List<Album>> getPosts() async {
   final response = await http.get(
-    Uri.parse('https://jsonplaceholder.typicode.com/todos'),
-    headers: {"Accept": "application/json"},
+    Uri.parse('https://jsonplaceholder.typicode.com/photos?_limit=20'),
+    // headers: {"Accept": "application/json"},
   );
 
   if (response.statusCode == 200) {
-    print(response.body);
     return (jsonDecode(response.body) as List)
-        .map((e) => Posts.fromJson(e))
+        .map((e) => Album.fromJson(e))
         .toList();
   } else {
     throw Exception('Failed');
@@ -137,7 +33,7 @@ class PostList extends StatefulWidget {
 }
 
 class _PostListState extends State<PostList> {
-  late Future<List<Posts>> futurePosts;
+  late Future<List<Album>> futurePosts;
 
   @override
   void initState() {
@@ -147,25 +43,42 @@ class _PostListState extends State<PostList> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Posts>>(
+    return FutureBuilder<List<Album>>(
       future: futurePosts,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return Column(
-            children: <Widget>[
-              ...snapshot.data!.map((e) => SizedBox(
-                    width: double.infinity,
-                    child: Card(
-                      elevation: 4,
-                      child: Text(e.title),
+          return ListView(
+            children: snapshot.data!
+                .map(
+                  (e) => GestureDetector(
+                    child: Row(
+                      children: [
+                        Image(
+                          image: NetworkImage(e.thumbnailUrl),
+                          width: 50.0,
+                          height: 50.0,
+                          fit: BoxFit.fill,
+                        ),
+                        Text(e.title),
+                      ],
                     ),
-                  ))
-            ],
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: ((context) => Detail(
+                              albumId: e.id,
+                            )),
+                      ),
+                    ),
+                  ),
+                )
+                .toList(),
           );
         } else if (snapshot.hasError) {
           return Text('${snapshot.hasError}');
         }
-        return const CircularProgressIndicator();
+
+        return const Center(child: CircularProgressIndicator());
       },
     );
   }
@@ -233,34 +146,6 @@ class _DropMenuStatus extends State<DropDownButton> {
   }
 }
 
-// class TopLayOut extends StatelessWidget {
-//   final double width;
-//   final double b = 3.0;
-//   const TopLayOut({super.key, required this.width});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       padding:
-//           const EdgeInsets.fromLTRB(15.0, 0, 15, 0), //left, top, right, bottom
-//       color: Colors.blue,
-//       child: Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//         children: [
-//           const DropDownButton(),
-//           Row(
-//             children: const [
-//               Icon(Icons.search),
-//               Icon(Icons.menu),
-//               Icon(Icons.notifications),
-//             ],
-//           )
-//         ],
-//       ),
-//     );
-//   }
-// }
-
 class BottomLayOut extends StatelessWidget {
   const BottomLayOut({super.key});
 
@@ -298,61 +183,7 @@ class ListItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: const [PostList()],
-    );
-    // ListView(
-    //     children: _items
-    //         .map((item) => GestureDetector(
-    //               child: Row(
-    //                 children: [
-    //                   Image(
-    //                     image: AssetImage(item['image'] as String),
-    //                     width: 80,
-    //                     height: 80,
-    //                     fit: BoxFit.cover,
-    //                   ),
-    //                   Expanded(
-    //                     child: Container(
-    //                       color: Colors.red,
-    //                       padding: const EdgeInsets.only(left: 10),
-    //                       child: Column(
-    //                         crossAxisAlignment: CrossAxisAlignment.start,
-    //                         children: [
-    //                           Text(item['itemTitle'] as String),
-    //                           Text(item['area'] as String),
-    //                           Text(item['price'].toString()),
-    //                           Container(
-    //                             padding: const EdgeInsets.only(right: 10),
-    //                             child: Row(
-    //                               mainAxisAlignment: MainAxisAlignment.end,
-    //                               children: [
-    //                                 const Icon(Icons.forum_outlined),
-    //                                 Text(item['chatCount'].toString()),
-    //                                 const Icon(Icons.favorite_border),
-    //                                 Text(item['jjimCount'].toString()),
-    //                               ],
-    //                             ),
-    //                           )
-    //                         ],
-    //                       ),
-    //                     ),
-    //                   )
-    //                 ],
-    //               ),
-    //               onTap: () => Navigator.push(
-    //                   context,
-    //                   MaterialPageRoute(
-    //                     builder: (context) => Detail(
-    //                       itemTitle: item['itemTitle'] as String,
-    //                       area: item['area'] as String,
-    //                       price: item['price'] as int,
-    //                       chatCount: item['chatCount'] as int,
-    //                       jjimCount: item['jjimCount'] as int,
-    //                     ),
-    //                   )),
-    //             ))
-    //         .toList());
+    return const PostList();
   }
 }
 
@@ -376,11 +207,9 @@ class Carret extends State<CarretStatus> {
     Expanded(
       child: Container(
         padding: const EdgeInsets.all(10),
+        height: 200,
         color: Colors.green,
-        child: Container(
-          color: Colors.white,
-          child: const ListItems(),
-        ),
+        child: const ListItems(),
       ),
     ),
     const Text('2'),
