@@ -62,15 +62,14 @@ class _DetailWidgetState extends State<DetailWidget> {
     return FutureBuilder<Album>(
       future: detailAlbum,
       builder: (context, snapshot) {
-        String title = snapshot.data!.title;
-        String url = snapshot.data!.url;
-
         if (snapshot.hasData) {
+          final String title = snapshot.data!.title;
+          final String url = snapshot.data!.url;
           return Column(
             children: [
-              Image(
-                image: NetworkImage(url),
-              ),
+              // Image(
+              //   image: NetworkImage(url),
+              // ),
               Text(title),
             ],
           );
