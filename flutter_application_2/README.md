@@ -70,3 +70,6 @@ appBar: AppBar(
 
 # MediaQuery.of(context).size.width * 0.7
  - 디바이스의 크기를 가져와서 width를 정할 수 있다.
+
+# showDialog -> showPopup
+ - 팝업창
