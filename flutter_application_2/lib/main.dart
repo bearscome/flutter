@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/animal_page.dart';
 import 'package:flutter_application_1/model.dart';
+import 'package:flutter_application_1/responsive/desktop_body.dart';
+import 'package:flutter_application_1/responsive/mobile_body.dart';
+import 'package:flutter_application_1/responsive/response.dart';
 
 void main() => runApp(const MyApp());
 
@@ -9,74 +12,77 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: _MypageState());
+    return MaterialApp(
+      theme: ThemeData(
+        primaryColor: Colors.deepOrange,
+        textTheme: const TextTheme(
+          bodyText2: TextStyle(fontSize: 30, color: Colors.white),
+        ),
+      ),
+      home: Mypage(),
+    );
   }
 }
 
-class _MypageState extends StatefulWidget {
-  const _MypageState({super.key});
+class Mypage extends StatefulWidget {
+  const Mypage({super.key});
 
   @override
-  State<_MypageState> createState() => __MypageStateState();
+  State<Mypage> createState() => _MypageState();
 }
 
-class __MypageStateState extends State<_MypageState> {
-  static List<String> animalName = [
-    'Bear',
-    'Camel',
-    'Deer',
-  ];
-
-  static List<String> animalImagePath = [
-    'images/1.png',
-    'images/2.png',
-    'images/3.png',
-  ];
-
-  static List<String> animalLocation = [
-    'KR',
-    'JP',
-    'CH',
-  ];
-
-  final List<Animal> animalData = List.generate(
-    animalLocation.length,
-    (index) => Animal(
-        animalName[index], animalImagePath[index], animalLocation[index]),
-  );
-
+class _MypageState extends State<Mypage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Listview'),
-      ),
-      body: ListView.builder(
-        itemCount: animalData.length,
-        itemBuilder: (context, index) {
-          return Card(
-            child: ListTile(
-              title: Text(
-                animalData[index].name,
-              ),
-              leading: SizedBox(
-                width: 50,
-                height: 50,
-                child: Image.asset(animalData[index].imgPath),
-              ),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => AnimalPage(
-                      animal: animalData[index],
-                    ),
-                  ),
-                );
-              },
-            ),
-          );
-        },
+      body: ResponsiveLayout(
+        desktopBdoy: DesktopBody(),
+        mobileBody: MobileBody(),
       ),
     );
   }
 }
+
+
+// class _MypageState extends State<Mypage> {
+//   @override
+//   Widget build(BuildContext context) {
+//     final currentWidth = MediaQuery.of(context).size.width;
+
+//     return Scaffold(
+//       backgroundColor: currentWidth < 600 ? Colors.deepPurple[300] : Colors.red,
+//       body: Center(
+//         child: Text(
+//           currentWidth.toString(),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// class _MypageState extends State<Mypage> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       backgroundColor: Colors.deepPurple,
+//       appBar: AppBar(
+//         title: Text('mediaQuery'),
+//       ),
+//       body: Center(
+//         child: Column(
+//           children: [
+//             Text('Wdith: ${MediaQuery.of(context).size.width.toString()}'),
+//             Text('height: ${MediaQuery.of(context).size.height.toString()}'),
+//             Text(
+//               'Aspect Ratio: ${MediaQuery.of(context).size.aspectRatio.toStringAsFixed(2)}',
+//             ),
+//             Text(
+//               'Orientation: ${MediaQuery.of(context).orientation.toString()}',
+//               // 가로세로모드?
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
