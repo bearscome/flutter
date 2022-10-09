@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/dice.dart';
 
 void main() => runApp(MyApp());
 
@@ -8,139 +7,102 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Dice game',
-      home: LogIn(),
+      title: 'Future',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: const Home(),
     );
   }
 }
 
-class LogIn extends StatefulWidget {
+class Home extends StatefulWidget {
+  const Home({super.key});
+
   @override
-  State<LogIn> createState() => _LogInState();
+  State<Home> createState() => _HomeState();
 }
 
-class _LogInState extends State<LogIn> {
-  TextEditingController controller = TextEditingController();
-  TextEditingController controller2 = TextEditingController();
+class _HomeState extends State<Home> {
+  String result = 'hi';
+
+  Future<void> _futureTest() async {
+    Future.delayed(const Duration(milliseconds: 500)).then((value) {
+      print('0');
+      setState(() {
+        result = '11111';
+        print(result);
+        print('2');
+      });
+      print('3');
+      print('4');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Log in'),
-        backgroundColor: Colors.redAccent,
+        title: const Text('Future test'),
         centerTitle: true,
-        leading: IconButton(icon: const Icon(Icons.menu), onPressed: () {}),
-        actions: <Widget>[
-          IconButton(icon: const Icon(Icons.search), onPressed: () {})
-        ],
       ),
-      body: Builder(
-        builder: (context) {
-          return GestureDetector(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(top: 50),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(30.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  print('1');
+                  _futureTest();
+                  print('3');
+                },
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    'Future test',
+                    style: TextStyle(fontSize: 20.0),
                   ),
-                  const Center(
-                    child: Image(
-                      image: AssetImage('image/chef.gif'),
-                      width: 170,
-                      height: 190,
-                    ),
-                  ),
-                  Form(
-                    child: Theme(
-                      data: ThemeData(
-                        primaryColor: Colors.teal,
-                        inputDecorationTheme: const InputDecorationTheme(
-                          labelStyle: TextStyle(
-                            color: Colors.teal,
-                            fontSize: 15,
-                          ),
-                        ),
-                      ),
-                      child: Container(
-                        padding: const EdgeInsets.all(40),
-                        child: Column(
-                          children: [
-                            TextField(
-                              // autofocus: true, // 자동으로 포커스가 이동하여 키보드가 노출된다.
-                              controller: controller,
-                              decoration: const InputDecoration(
-                                labelText: 'Enter Dice',
-                              ),
-                              keyboardType: TextInputType.emailAddress,
-                            ),
-                            TextField(
-                              controller: controller2,
-                              decoration: const InputDecoration(
-                                labelText: 'Enter Password',
-                              ),
-                              keyboardType: TextInputType.text,
-                              obscureText: true, // 암호화 텍스트
-                            ),
-                            const SizedBox(
-                              height: 40,
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                debugPrint('hi');
-                                if (controller.text == 'asd' &&
-                                    controller2.text == 'asd') {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => const Dice(),
-                                    ),
-                                  );
-                                } else if (controller.text != 'asd' &&
-                                    controller2.text == 'asd') {
-                                  showSnackBar(context, 'dice 철자가 일치하지 않습니다.');
-                                } else if (controller.text == 'asd' &&
-                                    controller2.text != 'asd') {
-                                  showSnackBar(context, '비밀번호가 일치하지 않습니다.');
-                                } else {
-                                  showSnackBar(context, '철자와 비밀번호가 일치하지 않습니다.');
-                                }
-                              },
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.orangeAccent,
-                                  minimumSize: const Size(100, 50)),
-                              child: const Icon(
-                                Icons.arrow_forward,
-                                color: Colors.white,
-                                size: 35,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
-            onTap: () {
-              FocusScope.of(context).unfocus();
-            },
-          );
-        },
+              const SizedBox(
+                height: 20.0,
+              ),
+              Text(
+                result,
+                style: const TextStyle(
+                  fontSize: 20.0,
+                  color: Colors.redAccent,
+                ),
+              ),
+              const Divider(
+                height: 20,
+                thickness: 2,
+              ),
+              FutureBuilder(
+                future: myFuture(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return Text(
+                      snapshot.data.toString(),
+                      style: const TextStyle(
+                        fontSize: 20,
+                        color: Colors.blue,
+                      ),
+                    );
+                  }
+
+                  return const CircularProgressIndicator();
+                },
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
 }
 
-void showSnackBar(BuildContext context, String msg) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      content: Text(
-        msg,
-        textAlign: TextAlign.center,
-      ),
-      duration: const Duration(seconds: 2),
-      backgroundColor: Colors.blue,
-    ),
-  );
+Future<String> myFuture() async {
+  await Future.delayed(const Duration(seconds: 2));
+  return 'another Future completed';
 }
