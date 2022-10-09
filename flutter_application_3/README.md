@@ -43,3 +43,8 @@
  3. Await 키워들르 만나면 future가 완료될 때까지 대기
  4. future가 완료되자마자 그 다음 코드를 실행
  5. Future에 await가 없으면, 동기 처리가 다 된 후 비동기 처리가 된다.
+
+ # Null safety
+ 1. Null: 빈 값 
+ 2. 모든 변수는 null이 될 수 없으며. non-nullalble 변수에는 null 값을 할당할 수 없다.
+ 3. Class 내의 변수는 단드시 선언과 동시에 초기화를 시켜야 한다.
