@@ -52,9 +52,21 @@ class _LoadingState extends State<Loading> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {},
-          child: Text('Get my location'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            Text(
+              '로딩중 입니다.',
+              style: TextStyle(
+                fontSize: 36,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(
+              height: 40,
+            ),
+            CircularProgressIndicator(),
+          ],
         ),
       ),
     );
