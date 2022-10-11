@@ -1,7 +1,12 @@
 import 'package:chatting_app/screens/main_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // 위젯 초기화
+  await Firebase.initializeApp();
+  // flutter 코어(위젯)가 초기화 되기 전에 FireBase 연동
   runApp(const MyApp());
 }
 
