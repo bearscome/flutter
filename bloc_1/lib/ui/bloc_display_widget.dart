@@ -1,38 +1,42 @@
-import 'package:bloc_1/bloc/count_bloc.dart';
-import 'package:bloc_1/components/count_view.dart';
+import 'package:bloc_1/provider/count_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-late CountBloc countBloc // 전역 변수로 CountBloc을 호출하고 late를 통해 나중에 값을 받는다._bloc
+class CountPage extends StatelessWidget {
+  CountPage({super.key});
 
-class BlocDisplayWidget extends StatefulWidget {
-  const BlocDisplayWidget({super.key});
-
-  @override
-  _BlocDisplayWidgetState createState() => _BlocDisplayWidgetState();
-}
-
-class _BlocDisplayWidgetState extends State<BlocDisplayWidget> {
-  @override
-  void initState() {
-    super.initState();
-    countBloc = CountBloc();
-  }
-
-  @override
-  void dipose() {
-    super.dispose();
-    countBloc.dispose();
-  }
+  late CounterProvider _countProvider;
 
   @override
   Widget build(BuildContext context) {
+    _countProvider = Provider.of<CounterProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Bloc 패턴"),
-        centerTitle: true,
-        elevation: 0.0,
+        title: Text('test_provider'),
       ),
-      body: CountView(),
-    )
+      body: Consumer<CounterProvider>(
+        builder: (context, value, child) {
+          return Center(
+            child: Column(
+              children: [
+                Text(
+                  _countProvider.count.toString(),
+                ),
+                Row(
+                  children: [
+                    TextButton(
+                        onPressed: () => _countProvider.increase(),
+                        child: Text('더하기')),
+                    TextButton(
+                        onPressed: () => _countProvider.decrease(),
+                        child: Text('뺴기')),
+                  ],
+                )
+              ],
+            ),
+          );
+        },
+      ),
+    );
   }
 }
