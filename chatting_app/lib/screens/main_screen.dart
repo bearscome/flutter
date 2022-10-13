@@ -1,8 +1,10 @@
+import 'package:chatting_app/add_image/add_image.dart';
 import 'package:chatting_app/config/palette.dart';
 import 'package:chatting_app/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LoginSingupScreen extends StatefulWidget {
   const LoginSingupScreen({super.key});
@@ -28,6 +30,18 @@ class _LoginSingupScreenState extends State<LoginSingupScreen> {
     if (isValid) {
       _formKey.currentState!.save(); // 폼 전체의 state값을 저장함
     }
+  }
+
+  void _showAlert(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          backgroundColor: Colors.white,
+          child: AddImage(),
+        );
+      },
+    );
   }
 
   @override
@@ -151,12 +165,13 @@ class _LoginSingupScreenState extends State<LoginSingupScreen> {
                                           : Palette.activeColor,
                                     ),
                                   ),
-                                  Container(
-                                    margin: const EdgeInsets.only(top: 3),
-                                    height: 2,
-                                    width: 55,
-                                    color: Colors.orange,
-                                  )
+                                  if (!isSingupScreen)
+                                    Container(
+                                      margin: const EdgeInsets.only(top: 3),
+                                      height: 2,
+                                      width: 55,
+                                      color: Colors.orange,
+                                    )
                                 ],
                               ),
                             ),
@@ -168,22 +183,42 @@ class _LoginSingupScreenState extends State<LoginSingupScreen> {
                               },
                               child: Column(
                                 children: [
-                                  Text(
-                                    'SignUP',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: isSingupScreen
-                                          ? Palette.activeColor
-                                          : Palette.textColor1,
-                                    ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'SignUP',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: isSingupScreen
+                                              ? Palette.activeColor
+                                              : Palette.textColor1,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 15,
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          _showAlert(context);
+                                        },
+                                        child: Icon(
+                                          Icons.image,
+                                          color: isSingupScreen
+                                              ? Colors.cyan
+                                              : Colors.grey[300],
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  Container(
-                                    margin: const EdgeInsets.only(top: 3),
-                                    height: 2,
-                                    width: 55,
-                                    color: Colors.orange,
-                                  )
+                                  if (isSingupScreen)
+                                    Container(
+                                      margin: const EdgeInsets.fromLTRB(
+                                          0, 3, 35, 0),
+                                      height: 2,
+                                      width: 55,
+                                      color: Colors.orange,
+                                    )
                                 ],
                               ),
                             ),
@@ -478,19 +513,16 @@ class _LoginSingupScreenState extends State<LoginSingupScreen> {
                               email: userEmail,
                               password: userPassword,
                             );
+                            await FirebaseFirestore.instance
+                                .collection('user')
+                                .doc(newUser.user!.uid)
+                                .set(
+                                    {'userName': userName, 'email': userEmail});
 
-                            if (newUser.user != null && mounted) {
+                            if (newUser.user != null) {
                               setState(() {
                                 showSpinner = false;
                               });
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) {
-                                    return const ChatScreen();
-                                  },
-                                ),
-                              );
                             }
                           } catch (e) {
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -519,14 +551,6 @@ class _LoginSingupScreenState extends State<LoginSingupScreen> {
                               setState(() {
                                 showSpinner = false;
                               });
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) {
-                                    return ChatScreen();
-                                  },
-                                ),
-                              );
                             }
                           } catch (e) {
                             // print(e);
