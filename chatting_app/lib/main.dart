@@ -37,3 +37,9 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
+// 기능들로 
+// 카메라 사진찍기, 갤러리, LED, 지문 인식, 패턴, 비밀번호 입력, faceId, gps, QR, 바코드 라이브러리
+// Provider, 정보 sqlite연동
+// mvc mvvm 
