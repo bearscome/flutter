@@ -43,3 +43,7 @@ class Page extends StatelessWidget {
     );
   }
 }
+
+// 이미지, gps, LED, Video, 지문인식, paceID, 잠금패턴
+// mvc mvvc
+// sqlite

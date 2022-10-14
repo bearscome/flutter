@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // 세로 또는 가로 고정
 // ignore: library_prefixes
 import 'package:image_picker/image_picker.dart' as ImagePicker;
+import 'package:gallery_saver/gallery_saver.dart';
 
 class Camera extends StatefulWidget {
   const Camera({super.key});
@@ -35,15 +36,38 @@ class _CameraExampleState extends State<CameraExample> {
   File? _image;
   final picker = ImagePicker.ImagePicker();
 
+  void _savePicture() async {
+    if (_image == null) {
+      return;
+    }
+    debugPrint('이미지 저장 $_image');
+
+    GallerySaver.saveImage(_image!.path, albumName: 'hsl').then((value) {
+      debugPrint('value: $value');
+    });
+  }
+
   Widget showImage() {
     return Container(
       color: const Color(0xffd0cece),
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.width,
-      child: Center(
-        child: _image == null
-            ? const Text('No image selected.')
-            : Image.file(File(_image!.path)),
+      child: Expanded(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _image == null
+                  ? const Text('No image selected.')
+                  : Image.file(File(_image!.path)),
+              _image != null
+                  ? TextButton(
+                      onPressed: () => _savePicture(),
+                      child: const Text('이미지 저장'),
+                    )
+                  : Container()
+            ],
+          ),
+        ),
       ),
     );
   }
