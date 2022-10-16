@@ -1,10 +1,15 @@
+//import 'dart:html'; // 요놈 떄문에 함수가 안됐다고?
+import 'dart:io';
+
 import 'package:chatting_app/add_image/add_image.dart';
 import 'package:chatting_app/config/palette.dart';
 import 'package:chatting_app/screens/chat_screen.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class LoginSingupScreen extends StatefulWidget {
   const LoginSingupScreen({super.key});
@@ -15,13 +20,19 @@ class LoginSingupScreen extends StatefulWidget {
 
 class _LoginSingupScreenState extends State<LoginSingupScreen> {
   final _authentication = FirebaseAuth.instance;
-  bool isSingupScreen = true;
+  bool isSignUpScreen = true;
   int animationDuration = 500;
   final _formKey = GlobalKey<FormState>();
   String userName = '';
   String userEmail = '';
   String userPassword = '';
   bool showSpinner = false;
+  File? userPickedImage;
+
+  void pickedImage(File image) {
+    debugPrint('asdasdasd Image: $image');
+    userPickedImage = image;
+  }
 
   void _tryValidation() {
     final isValid = _formKey.currentState!.validate();
@@ -32,13 +43,13 @@ class _LoginSingupScreenState extends State<LoginSingupScreen> {
     }
   }
 
-  void _showAlert(BuildContext context) {
+  void showAlert(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) {
         return Dialog(
           backgroundColor: Colors.white,
-          child: AddImage(),
+          child: AddImage(pickedImage),
         );
       },
     );
@@ -87,7 +98,7 @@ class _LoginSingupScreenState extends State<LoginSingupScreen> {
                             children: [
                               TextSpan(
                                 text:
-                                    isSingupScreen ? 'to Yummy Chat!' : ' back',
+                                    isSignUpScreen ? 'to Yummy Chat!' : ' back',
                                 style: const TextStyle(
                                   letterSpacing: 1,
                                   fontSize: 25,
@@ -102,7 +113,7 @@ class _LoginSingupScreenState extends State<LoginSingupScreen> {
                           height: 5,
                         ),
                         Text(
-                          isSingupScreen
+                          isSignUpScreen
                               ? 'Signup to continue'
                               : 'Signin to continue',
                           style: const TextStyle(
@@ -124,7 +135,7 @@ class _LoginSingupScreenState extends State<LoginSingupScreen> {
                   duration: Duration(milliseconds: animationDuration),
                   curve: Curves.easeIn,
                   padding: const EdgeInsets.all(20),
-                  height: isSingupScreen ? 280 : 250,
+                  height: isSignUpScreen ? 280 : 250,
                   width: MediaQuery.of(context).size.width - 40,
                   margin: const EdgeInsets.symmetric(
                     horizontal: 20,
@@ -150,7 +161,7 @@ class _LoginSingupScreenState extends State<LoginSingupScreen> {
                             GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  isSingupScreen = false;
+                                  isSignUpScreen = false;
                                 });
                               },
                               child: Column(
@@ -160,12 +171,12 @@ class _LoginSingupScreenState extends State<LoginSingupScreen> {
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
-                                      color: isSingupScreen
+                                      color: isSignUpScreen
                                           ? Palette.textColor1
                                           : Palette.activeColor,
                                     ),
                                   ),
-                                  if (!isSingupScreen)
+                                  if (!isSignUpScreen)
                                     Container(
                                       margin: const EdgeInsets.only(top: 3),
                                       height: 2,
@@ -178,7 +189,7 @@ class _LoginSingupScreenState extends State<LoginSingupScreen> {
                             GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  isSingupScreen = true;
+                                  isSignUpScreen = true;
                                 });
                               },
                               child: Column(
@@ -190,7 +201,7 @@ class _LoginSingupScreenState extends State<LoginSingupScreen> {
                                         style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,
-                                          color: isSingupScreen
+                                          color: isSignUpScreen
                                               ? Palette.activeColor
                                               : Palette.textColor1,
                                         ),
@@ -198,20 +209,21 @@ class _LoginSingupScreenState extends State<LoginSingupScreen> {
                                       const SizedBox(
                                         width: 15,
                                       ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          _showAlert(context);
-                                        },
-                                        child: Icon(
-                                          Icons.image,
-                                          color: isSingupScreen
-                                              ? Colors.cyan
-                                              : Colors.grey[300],
+                                      if (isSignUpScreen)
+                                        GestureDetector(
+                                          onTap: () {
+                                            showAlert(context);
+                                          },
+                                          child: Icon(
+                                            Icons.image,
+                                            color: isSignUpScreen
+                                                ? Colors.cyan
+                                                : Colors.grey[300],
+                                          ),
                                         ),
-                                      ),
                                     ],
                                   ),
-                                  if (isSingupScreen)
+                                  if (isSignUpScreen)
                                     Container(
                                       margin: const EdgeInsets.fromLTRB(
                                           0, 3, 35, 0),
@@ -224,7 +236,7 @@ class _LoginSingupScreenState extends State<LoginSingupScreen> {
                             ),
                           ],
                         ),
-                        if (isSingupScreen)
+                        if (isSignUpScreen)
                           Container(
                             margin: const EdgeInsets.only(top: 20),
                             child: Form(
@@ -375,7 +387,7 @@ class _LoginSingupScreenState extends State<LoginSingupScreen> {
                               ),
                             ),
                           ),
-                        if (!isSingupScreen)
+                        if (!isSignUpScreen)
                           Container(
                             margin: const EdgeInsets.only(top: 20),
                             child: Form(
@@ -487,7 +499,7 @@ class _LoginSingupScreenState extends State<LoginSingupScreen> {
               AnimatedPositioned(
                 duration: Duration(milliseconds: animationDuration),
                 curve: Curves.easeIn,
-                top: isSingupScreen ? 430 : 390,
+                top: isSignUpScreen ? 430 : 390,
                 right: 0,
                 left: 0,
                 child: Center(
@@ -504,7 +516,21 @@ class _LoginSingupScreenState extends State<LoginSingupScreen> {
                         setState(() {
                           showSpinner = true;
                         });
-                        if (isSingupScreen) {
+                        if (isSignUpScreen) {
+                          if (userPickedImage == null) {
+                            setState(() {
+                              showSpinner = false;
+                            });
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                  'please pick Your image',
+                                ),
+                                backgroundColor: Colors.blue,
+                              ),
+                            );
+                            return;
+                          }
                           _tryValidation();
 
                           try {
@@ -513,11 +539,23 @@ class _LoginSingupScreenState extends State<LoginSingupScreen> {
                               email: userEmail,
                               password: userPassword,
                             );
+
+                            final refImage = FirebaseStorage.instance
+                                .ref()
+                                .child('picked_image')
+                                .child(newUser.user!.uid + 'png');
+
+                            await refImage.putFile(userPickedImage!);
+                            final url = await refImage.getDownloadURL();
+
                             await FirebaseFirestore.instance
                                 .collection('user')
                                 .doc(newUser.user!.uid)
-                                .set(
-                                    {'userName': userName, 'email': userEmail});
+                                .set({
+                              'userName': userName,
+                              'email': userEmail,
+                              'picked_image': url,
+                            });
 
                             if (newUser.user != null) {
                               setState(() {
@@ -525,17 +563,19 @@ class _LoginSingupScreenState extends State<LoginSingupScreen> {
                               });
                             }
                           } catch (e) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text(
-                                  'please check your email and password',
+                            if (mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                    'please check your email and password',
+                                  ),
+                                  backgroundColor: Colors.blue,
                                 ),
-                                backgroundColor: Colors.blue,
-                              ),
-                            );
+                              );
+                            }
                           }
                         }
-                        if (!isSingupScreen) {
+                        if (!isSignUpScreen) {
                           setState(() {
                             showSpinner = true;
                           });
@@ -590,14 +630,14 @@ class _LoginSingupScreenState extends State<LoginSingupScreen> {
               AnimatedPositioned(
                 duration: Duration(milliseconds: animationDuration),
                 curve: Curves.easeIn,
-                top: isSingupScreen
+                top: isSignUpScreen
                     ? MediaQuery.of(context).size.height - 125
                     : MediaQuery.of(context).size.height - 165,
                 right: 0,
                 left: 0,
                 child: Column(
                   children: [
-                    Text(isSingupScreen ? "or Signup with" : "or Signin with"),
+                    Text(isSignUpScreen ? "or Signup with" : "or Signin with"),
                     const SizedBox(
                       height: 10,
                     ),

@@ -29,11 +29,14 @@ class Messages extends StatelessWidget {
           reverse: true,
           itemCount: chatDocs.length,
           itemBuilder: (context, index) {
-            print('뭔데 ${chatDocs[index]}');
+            final tt = chatDocs.map((e) {
+              return e;
+            }).toList();
             return ChatBubbles(
               chatDocs[index]['text'],
               chatDocs[index]['userID'].toString() == user!.uid,
               chatDocs[index]['userName'],
+              chatDocs[index]['userImage'],
             );
           },
         );
