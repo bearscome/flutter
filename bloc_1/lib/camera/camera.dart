@@ -5,7 +5,6 @@ import 'package:flutter/services.dart'; // 세로 또는 가로 고정
 // ignore: library_prefixes
 import 'package:image_picker/image_picker.dart' as ImagePicker;
 import 'package:gallery_saver/gallery_saver.dart';
-import 'package:path/path.dart';
 
 class Camera extends StatefulWidget {
   const Camera({super.key});
