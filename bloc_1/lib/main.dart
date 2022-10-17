@@ -1,4 +1,5 @@
 import 'package:bloc_1/camera/camera.dart';
+import 'package:bloc_1/gps/gps.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const MyApp());
@@ -24,10 +25,10 @@ class MyApp extends StatelessWidget {
 class Page extends StatelessWidget {
   const Page({super.key});
 
-  void _goto(context) {
+  void _goto(BuildContext context, Widget page) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const Camera()),
+      MaterialPageRoute(builder: (context) => page),
     );
   }
 
@@ -36,8 +37,12 @@ class Page extends StatelessWidget {
     return Column(
       children: [
         TextButton(
-          onPressed: () => _goto(context),
-          child: const Text('카메라 테스트'),
+          onPressed: () => _goto(context, const Camera()),
+          child: Text(const Camera().PageTitle.toString()),
+        ),
+        TextButton(
+          onPressed: () => _goto(context, const GetGps()),
+          child: Text(const GetGps().PageTitle.toString()),
         ),
       ],
     );

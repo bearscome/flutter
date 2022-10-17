@@ -9,6 +9,7 @@ import 'package:path/path.dart';
 
 class Camera extends StatefulWidget {
   const Camera({super.key});
+  final PageTitle = 'Camera';
 
   @override
   State<Camera> createState() => _CameraState();
@@ -19,7 +20,7 @@ class _CameraState extends State<Camera> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('camera'),
+        title: Text(widget.PageTitle),
       ),
       body: const CameraExample(),
     );
