@@ -1,5 +1,6 @@
 import 'package:bloc_1/camera/camera.dart';
 import 'package:bloc_1/gps/gps.dart';
+import 'package:bloc_1/local_auth/local_auth.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const MyApp());
@@ -43,6 +44,10 @@ class Page extends StatelessWidget {
         TextButton(
           onPressed: () => _goto(context, const GetGps()),
           child: Text(const GetGps().PageTitle.toString()),
+        ),
+        TextButton(
+          onPressed: () => _goto(context, const LocalAuth()),
+          child: Text(const LocalAuth().PageTitle.toString()),
         ),
       ],
     );

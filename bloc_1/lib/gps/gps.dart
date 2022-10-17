@@ -48,7 +48,9 @@ class _GetGpsState extends State<GetGps> {
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
     debugPrint('위치: $position');
-    positionInfo = position;
+    setState(() {
+      positionInfo = position;
+    });
 
     /**
      * 마지막 위치

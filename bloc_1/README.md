@@ -24,6 +24,9 @@
  - GPS 접근
     geolocator: 플랫폼별 위치 서비스(FusedLocationProviderClient 또는 사용할 수 없는 Android의 LocationManager 및 iOS의 CLLocationManager)에 대한 쉬운 액세스를 제공하는 Flutter 지리적 위치 플러그인이다.
         URL: https://pub.dev/packages/geolocator
+        android/app/src/main
+        <!-- <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+        <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/> -->
 
         권한설정
         iOS: /ios/Runner/Info.plist
@@ -34,6 +37,18 @@
         Android: /android/app/src/main/AndroidManifest.xml
          - <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
          - <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+ - 생체 인식
+    local_auth: 사용자의 로컬 온 디바이스 인증을 수행함, 지문 또는 얼굴 인식과 같은 
+    android/app/src/main androidManifest.xml
+        URL: https://pub.dev/packages/local_auth
+        오류관련 git: https://gist.github.com/akifarhan/f70a2c777651f2ea61a15eb92a5939c1
+            - Add USE_FINGERPRINT permission
+            - Change FlutterActivity to FlutterFragmentActivity
+    
+        권한설정
+        Android: /android/app/src/main androidManifest.xml
+         - <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
+
         
  
 # bloc_1
