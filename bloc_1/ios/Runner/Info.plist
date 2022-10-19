@@ -62,5 +62,11 @@
 		<string>itms-beta</string>
 		<string>itms</string>
 	</array>
+	<key>NSAppTransportSecurity</key>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 </dict>
 </plist>

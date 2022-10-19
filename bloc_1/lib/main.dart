@@ -1,4 +1,5 @@
 import 'package:bloc_1/camera/camera.dart';
+import 'package:bloc_1/columnrow/column_row.dart';
 import 'package:bloc_1/googlePlay/movetopage.dart';
 import 'package:bloc_1/gps/gps.dart';
 import 'package:bloc_1/local_auth/local_auth.dart';
@@ -63,6 +64,10 @@ class Page extends StatelessWidget {
             m2s.move2Page(androidAppId: androidAppId, iOSAppId: iOSAppId);
           },
           child: const Text('move to Store'),
+        ),
+        TextButton(
+          onPressed: () => _goto(context, const ColumnRow()),
+          child: Text(const ColumnRow().PageTitle.toString()),
         ),
       ],
     );
