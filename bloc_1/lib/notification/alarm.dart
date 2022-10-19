@@ -30,6 +30,7 @@ class _AlarmState extends State<Alarm> {
       return;
     }
 
+    FocusScope.of(context).unfocus();
     subscription = const Ticker().tick(ticks: duraction).listen((value) {
       setState(() {
         _stared = true;
