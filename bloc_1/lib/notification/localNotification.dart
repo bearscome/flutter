@@ -34,7 +34,10 @@ class LocalNotificationTest {
     debugPrint('알림 권한  동의:true, 비동의:false $result');
   }
 
-  Future<void> sampleNotification() async {
+  Future<void> sampleNotification({
+    String title = '알람 타이틀',
+    String body = '알람 내용',
+  }) async {
     debugPrint('임의로 푸쉬팝업 전송');
     num++;
     const AndroidNotificationDetails androidNotificationDetails =
@@ -46,7 +49,7 @@ class LocalNotificationTest {
       importance: Importance.max,
       priority: Priority.max,
       showWhen: false,
-      subText: '안녕하세요',
+      // subText: subText,
     );
 
     const NotificationDetails platformChannelSpcifics = NotificationDetails(
@@ -56,8 +59,8 @@ class LocalNotificationTest {
 
     await flutterLocalNotificationsPlugin.show(
       num,
-      'title: 알람 타이틀 $num',
-      'body: 알람 내용 $num',
+      title,
+      body,
       platformChannelSpcifics,
       payload: 'itemX',
     );

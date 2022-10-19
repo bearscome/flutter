@@ -52,7 +52,7 @@ class _MyWidgetState extends State<MyWidget> {
         ),
         ElevatedButton(
           onPressed: () {
-            pushAl.sampleNotification();
+            pushAl.sampleNotification(title: '알림 반복', body: "알림 반복");
           },
           child: Text('알림 반복'),
         ),
