@@ -48,11 +48,11 @@
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>ios Camera<string>
+	<string>ios Camera</string>
 	<key>NSCameraUsageDescription</key>
-	<string>ios Camera<string>
+	<string>ios Camera</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>ios Camera<string>
+	<string>ios Camera</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app needs access to location when open.</string>
 	<key>NSLocationAlwaysUsageDescription</key>

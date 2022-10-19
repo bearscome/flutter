@@ -58,7 +58,7 @@ class _MyWidgetState extends State<MyWidget> {
     canUseAuth = availableBiometrics;
 
     /**
-     * weak: 패턴
+     * weak: 패턴, pin번호 기본 인증인 듯
      * strong: 지문
      */
     if (availableBiometrics.contains(BiometricType.fingerprint)) {
