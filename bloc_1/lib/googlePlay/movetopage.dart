@@ -1,14 +1,10 @@
-import 'package:flutter/material.dart';
+import 'package:launch_review/launch_review.dart';
 
-class MoveToGooglePlay {
-  final String url;
-  final String defaultUrl = 'http://play.google.com';
-
-  MoveToGooglePlay({required this.url});
-
-  void init() {}
-
-  void move2Page() async {
-    try {} catch (e) {}
+class MoveToStore {
+  void move2Page({
+    String androidAppId = 'com.iyaffle.rangoli',
+    String iOSAppId = '585027354',
+  }) async {
+    LaunchReview.launch(androidAppId: androidAppId, iOSAppId: iOSAppId);
   }
 }
