@@ -46,6 +46,7 @@ dependencies:
   launch_review: ^3.0.1
   firebase_core: ^2.0.0
   firebase_messaging: ^14.0.1
+  sqflite: ^2.1.0+1
 
 dev_dependencies:
   flutter_test:

@@ -5,6 +5,7 @@ import 'package:bloc_1/gps/gps.dart';
 import 'package:bloc_1/local_auth/local_auth.dart';
 import 'package:bloc_1/notification/alarm.dart';
 import 'package:bloc_1/notification/notification.dart';
+import 'package:bloc_1/sqlite/sqliteMessage.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -14,10 +15,6 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 }
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  FirebaseMessaging.onBackgroundMessage(
-      (message) => _firebaseMessagingBackgroundHandler(message));
   runApp(const MyApp());
 }
 
@@ -81,6 +78,10 @@ class Page extends StatelessWidget {
         TextButton(
           onPressed: () => _goto(context, const ColumnRow()),
           child: Text(const ColumnRow().PageTitle.toString()),
+        ),
+        TextButton(
+          onPressed: () => _goto(context, const SQLite()),
+          child: Text(const SQLite().PageTitle.toString()),
         ),
       ],
     );
