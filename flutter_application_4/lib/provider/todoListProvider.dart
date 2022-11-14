@@ -3,7 +3,7 @@ import 'package:flutter_application_4/model/todomodel.dart';
 import 'package:flutter_application_4/repository/todoListRepository.dart';
 
 class TodoListProvider extends ChangeNotifier {
-  TodoListRepository _todoListRepository = TodoListRepository();
+  TodoListRepository todoListRepository = TodoListRepository();
   List<TodoModel> _todoList = [];
   int _todoTotal = 0;
 
@@ -11,8 +11,8 @@ class TodoListProvider extends ChangeNotifier {
   int get todoListGetTotal => _todoTotal;
 
   Future<void> todoListInit() async {
-    await _todoListRepository.database;
-    List list = await _todoListRepository.getAllData();
+    await todoListRepository.database;
+    List list = await todoListRepository.getAllData();
 
     List<TodoModel> todoItems = list.map((e) {
       return TodoModel(
@@ -30,8 +30,11 @@ class TodoListProvider extends ChangeNotifier {
   }
 
   Future<void> todoItemCreate(
-      String title, String content, String recordData) async {
-    await _todoListRepository.createItem(
+    String title,
+    String content,
+    String recordData,
+  ) async {
+    await todoListRepository.createItem(
       title: title,
       content: content,
       recordDate: DateTime.now().toString(),
@@ -41,7 +44,7 @@ class TodoListProvider extends ChangeNotifier {
   }
 
   Future<void> todoItemUpdate(int no, String title, String content) async {
-    await _todoListRepository.updateItem(
+    await todoListRepository.updateItem(
       no: no,
       title: title,
       content: content,
@@ -52,13 +55,13 @@ class TodoListProvider extends ChangeNotifier {
 
   Future<void> deleteTodoItem(int id) async {
     print('deleteTodoItem id ${id}');
-    await _todoListRepository.deleteItem(id);
+    await todoListRepository.deleteItem(id);
     todoListInit();
     notifyListeners();
   }
 
   // Future<TodoModel> readItem(int id) async {
-  // List<Map<String, dynamic>> getData = await _todoListRepository.readItem(id);
+  // List<Map<String, dynamic>> getData = await todoListRepository.readItem(id);
   // TodoModel data = TodoModel(
   //   no: getData[0]["no"],
   //   title: getData[0]['title'],

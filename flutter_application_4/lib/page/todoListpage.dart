@@ -137,51 +137,53 @@ class _TodoListWriteState extends State<TodoListWrite> {
       ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
-        child: Container(
-          color: Colors.white,
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          child: Column(
-            children: [
-              Container(
-                height: 50,
-                color: Colors.red,
-                child: Row(
-                  children: [
-                    const Text('타이틀'),
-                    Expanded(
-                      child: TextFormField(
-                        onChanged: (value) => title = value,
-                        controller: _titleTextEditingController,
+        child: SingleChildScrollView(
+          child: Container(
+            color: Colors.white,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+              children: [
+                Container(
+                  height: 50,
+                  color: Colors.red,
+                  child: Row(
+                    children: [
+                      const Text('타이틀'),
+                      Expanded(
+                        child: TextFormField(
+                          onChanged: (value) => title = value,
+                          controller: _titleTextEditingController,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Container(
-                color: Colors.green,
-                height: 300,
-                child: Row(
-                  children: [
-                    const Text('본문'),
-                    Expanded(
-                      child: TextFormField(
-                        controller: _contentTextEditingController,
-                        onChanged: (value) => content = value,
-                        maxLines: 30,
+                const SizedBox(
+                  height: 30,
+                ),
+                Container(
+                  color: Colors.green,
+                  height: 300,
+                  child: Row(
+                    children: [
+                      const Text('본문'),
+                      Expanded(
+                        child: TextFormField(
+                          controller: _contentTextEditingController,
+                          onChanged: (value) => content = value,
+                          maxLines: 30,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              ElevatedButton(
-                child: Text(!widget.initialState ? '수정하기' : "작성하기"),
-                onPressed: () => submit(),
-              ),
-            ],
+                ElevatedButton(
+                  child: Text(!widget.initialState ? '수정하기' : "작성하기"),
+                  onPressed: () => submit(),
+                ),
+              ],
+            ),
           ),
         ),
       ),
