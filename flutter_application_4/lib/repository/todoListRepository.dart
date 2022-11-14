@@ -59,25 +59,24 @@ class TodoListRepository {
 
   Future<List<Map<String, Object?>>> getAllData() async {
     var db = await database;
-    print('aaaaaa ${await db.rawQuery('SELECT * FROM todoList')}');
     return await db.rawQuery('SELECT * FROM todoList');
   }
 
-  readItem(int id) async {
-    final db = await database;
-    // var res = await db.rawQuery('SELECT * FROM $tableId WHERE id = ?', [no]);
-    var res = await db.query(tableId, where: 'no = ?', whereArgs: [id]);
-    print('res $res');
-    return res;
-  }
+  // readItem(int id) async {
+  //   final db = await database;
+  //   // var res = await db.rawQuery('SELECT * FROM $tableId WHERE id = ?', [no]);
+  //   var res = await db.query(tableId, where: 'no = ?', whereArgs: [id]);
+  //   print('res $res');
+  //   return res;
+  // }
 
-  Future<bool> deleteItem(int no) async {
+  Future<void> deleteItem(int no) async {
     final db = await database;
     await db.delete(tableId, where: 'no = ?', whereArgs: [no]);
-    print('aaaaa ttt  = ${await db.delete(tableId, where: 'no = ?', whereArgs: [
-          no
-        ])}');
-    return true;
+    // print('aaaaa ttt  = ${await db.delete(tableId, where: 'no = ?', whereArgs: [
+    //       no
+    //     ])}');
+    // return true;
   }
 
   deleteAllItem() async {

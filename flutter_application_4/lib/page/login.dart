@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/page/userCrossLoad.dart';
 import 'package:flutter_application_4/provider/loginProvider.dart';
@@ -60,44 +58,32 @@ class _LoginPageState extends State<LoginPage> {
       appBar: AppBar(
         title: const Text('로그인'),
       ),
-      body: GestureDetector(
-        onTap: () {
-          debugPrint('ontap');
-        },
-        child: SizedBox(
-          // width: MediaQuery.of(context).size.width - 20,
-          height: MediaQuery.of(context).size.height,
-          child: GestureDetector(
-            onTap: () => FocusScope.of(context).unfocus(),
-            child: SingleChildScrollView(
-              child: Column(
-                // mainAxisAlignment: MainAxisAlignment.center,
-                // crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  TextField(
-                    // controller: _userIdController,
-                    onChanged: (value) => setState(
-                      () {
-                        _username = value;
-                      },
-                    ),
-                  ),
-                  TextField(
-                    // controller: _passwordController,
-                    onChanged: (value) => setState(
-                      () {
-                        _password = value;
-                      },
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      submit();
+      body: SizedBox(
+        height: MediaQuery.of(context).size.height,
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                TextField(
+                  onChanged: (value) => setState(
+                    () {
+                      _username = value;
                     },
-                    child: const Text('로그인'),
-                  )
-                ],
-              ),
+                  ),
+                ),
+                TextField(
+                  onChanged: (value) => setState(
+                    () {
+                      _password = value;
+                    },
+                  ),
+                ),
+                TextButton(
+                  onPressed: () => submit(),
+                  child: const Text('로그인'),
+                )
+              ],
             ),
           ),
         ),

@@ -6,13 +6,11 @@ class TodoListProvider extends ChangeNotifier {
   TodoListRepository _todoListRepository = TodoListRepository();
   List<TodoModel> _todoList = [];
   int _todoTotal = 0;
-  int _index = 0;
 
   List<TodoModel> get todoListGetAllItem => _todoList;
   int get todoListGetTotal => _todoTotal;
-  int get todoListGetIndex => _index;
 
-  todoListInit() async {
+  Future<void> todoListInit() async {
     await _todoListRepository.database;
     List list = await _todoListRepository.getAllData();
 

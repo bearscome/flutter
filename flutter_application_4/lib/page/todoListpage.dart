@@ -36,7 +36,7 @@ class _TodoListWriteState extends State<TodoListWrite> {
     super.initState();
     _titleTextEditingController = TextEditingController();
     _contentTextEditingController = TextEditingController();
-    print('widget, ${widget.id}');
+    debugPrint('widget, ${widget.id}');
     if (!widget.initialState) {
       modifyInit(widget.id);
     }
@@ -73,12 +73,13 @@ class _TodoListWriteState extends State<TodoListWrite> {
       title = getItem.title;
       content = getItem.content;
 
-      print('----------------------');
-      print(_titleTextEditingController.value.text);
-      print(_titleTextEditingController.text);
-      print('----------------------');
+      debugPrint('----------------------');
+      debugPrint(_titleTextEditingController.value.text);
+      debugPrint(_titleTextEditingController.text);
+      debugPrint('----------------------');
 
-      print('title: $title, content: $content getItem, ${getItem.recordDate}');
+      debugPrint(
+          'title: $title, content: $content getItem, ${getItem.recordDate}');
     });
   }
 
@@ -86,7 +87,8 @@ class _TodoListWriteState extends State<TodoListWrite> {
   Widget build(BuildContext context) {
     _todoListProvider = Provider.of<TodoListProvider>(context);
 
-    print('asdasdas $title, asdsadas $content, asdasdas ${item?.recordDate}');
+    debugPrint(
+        'asdasdas $title, asdsadas $content, asdasdas ${item?.recordDate}');
 
     void submit() async {
       if (title.isNotEmpty && content.isNotEmpty) {
@@ -103,8 +105,9 @@ class _TodoListWriteState extends State<TodoListWrite> {
             content,
           );
         }
-
-        Navigator.pop(context);
+        if (mounted) {
+          Navigator.pop(context);
+        }
       } else {
         showDialog(
           context: context,
