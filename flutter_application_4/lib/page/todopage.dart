@@ -34,9 +34,9 @@ class _ToDoListState extends State<ToDoList> {
     List<TodoModel> todoList = _todoListProvider.todoListGetAllItem;
     int total = _todoListProvider.todoListGetTotal;
 
-    void todoItemCreate() {
-      // _todoListProvider.todoItemCreate();
-    }
+    // void todoItemCreate() {
+    // _todoListProvider.todoItemCreate();
+    // }
 
     void todoItemDelete(int id) {
       _todoListProvider.deleteTodoItem(id);
@@ -69,7 +69,7 @@ class _ToDoListState extends State<ToDoList> {
                     IconButton(
                       onPressed: () {
                         todoItemDelete(todoList[index].no);
-                        print('삭제');
+                        debugPrint('삭제');
                       },
                       icon: const Icon(Icons.delete),
                     ),

@@ -63,8 +63,10 @@ class _TodoListWriteState extends State<TodoListWrite> {
       List<TodoModel> itemList =
           Provider.of<TodoListProvider>(context, listen: false)
               .todoListGetAllItem;
-      int getItemIndex = itemList.indexWhere((element) => element.no == id);
-      TodoModel getItem = itemList[getItemIndex];
+      // int getItemIndex = itemList.indexWhere((element) => element.no == id);
+      // TodoModel getItem = itemList[getItemIndex];
+      TodoModel getItem = itemList.singleWhere((element) => element.no == id);
+      // item의 id가 없을수도 다를 수도 없다.
       item = getItem;
 
       _titleTextEditingController.text = getItem.title;
@@ -122,7 +124,7 @@ class _TodoListWriteState extends State<TodoListWrite> {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: Text('닫기'),
+                  child: const Text('닫기'),
                 )
               ],
             );

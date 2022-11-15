@@ -41,9 +41,9 @@ class TodoListRepository {
   FutureOr<void> _onUpgrade(Database db, int oldVersion, int newVersion) {}
 
   Future<void> createItem({
-    String title = 'title',
-    String content = 'content',
-    String recordDate = 'recordtime',
+    required String title,
+    required String content,
+    required String recordDate,
   }) async {
     var db = await database;
 
@@ -85,9 +85,9 @@ class TodoListRepository {
   }
 
   updateItem({
-    int no = 0,
-    String title = '',
-    String content = '',
+    required int no,
+    required String title,
+    required String content,
   }) async {
     final db = await database;
 

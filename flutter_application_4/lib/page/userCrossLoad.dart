@@ -34,13 +34,15 @@ class _FnListPageState extends State<FnListPage> {
       ),
       drawer: const NavDrawer(),
       body: _contentList.elementAt(_tapNum),
-      floatingActionButton: FloatingActionButton.small(
-        onPressed: () => Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => TodoListWrite(true, 0)),
-        ),
-        child: const Icon(Icons.add),
-      ),
+      floatingActionButton: _tapNum == 0
+          ? FloatingActionButton.small(
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => TodoListWrite(true, 0)),
+              ),
+              child: const Icon(Icons.add),
+            )
+          : null,
       bottomNavigationBar: BottomNavigationBar(
         onTap: (value) {
           setState(() {

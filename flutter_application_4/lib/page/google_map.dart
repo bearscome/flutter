@@ -7,11 +7,5 @@ class GoogleMapPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const GoogleMapWidget();
-    // return Scaffold(
-    //   appBar: AppBar(
-    //     title: const Text('구글 지도'),
-    //   ),
-    //   body: const GoogleMapWidget(),
-    // );
   }
 }

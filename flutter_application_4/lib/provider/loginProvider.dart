@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class UserStateProvider extends ChangeNotifier {
-  List<Map<String, String>> userList = [
+  final List<Map<String, String>> userList = [
     {'username': 'qwe', 'password': 'qwe'},
     {'username': 'q', 'password': 'q'},
   ];
   bool _login = false;
   String _userName = '';
-  Map<String, dynamic> statusCode = {
+  final Map<String, dynamic> statusCode = {
     "true": true,
     "false": false,
     "message": {
