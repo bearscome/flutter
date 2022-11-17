@@ -14,24 +14,18 @@ class WebviewPage extends StatefulWidget {
 class _WebviewPageState extends State<WebviewPage> {
   late WebViewController _webViewController;
   bool loading = true;
-  Future<bool> backAction(context) async {
+
+  Future<bool> backAction(context) {
     Future<bool> future = _webViewController.canGoBack();
 
-    print('future_ $future');
-
     future.then((canGoBack) {
-      print('future_canGoBack $canGoBack');
-      if (canGoBack) {
-        _webViewController.goBack();
-      } else {
-        print('future_더이상 뒤로갈페이지가 없습니다.');
-        if (Platform.isIOS) {
-          exit(0);
-        } else {
-          SystemNavigator.pop();
-        }
-      }
+      canGoBack
+          ? _webViewController.goBack() // 웹뷰 뒤로가기
+          : Platform.isIOS // 히스토리가 없다면 앱 종료
+              ? exit(0)
+              : SystemNavigator.pop();
     });
+
     return Future.value(false);
   }
 
@@ -42,7 +36,7 @@ class _WebviewPageState extends State<WebviewPage> {
       child: Stack(
         children: [
           WebView(
-            initialUrl: 'https://www.google.com',
+            initialUrl: 'https://seasonmarket.co.kr/',
             javascriptMode: JavascriptMode.unrestricted,
             gestureNavigationEnabled: true,
             userAgent: 'random',

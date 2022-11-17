@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_4/constants/constants.dart';
 import 'package:flutter_application_4/page/audiopage.dart';
 import 'package:flutter_application_4/page/google_map.dart';
 import 'package:flutter_application_4/page/login.dart';
@@ -17,15 +18,6 @@ class FnListPage extends StatefulWidget {
 }
 
 class _FnListPageState extends State<FnListPage> {
-  final List _contentList = [
-    const ToDoList(),
-    ChangeNotifierProvider(
-      create: (context) => AudioProvider(),
-      child: const AudioPage(),
-    ),
-    const GoogleMapPage(),
-    const WebviewPage(),
-  ];
   int _tapNum = 0;
 
   @override
@@ -35,7 +27,7 @@ class _FnListPageState extends State<FnListPage> {
         title: const Text('상태 관리하면서 제작'),
       ),
       drawer: const NavDrawer(),
-      body: _contentList.elementAt(_tapNum),
+      body: route.elementAt(_tapNum)["page"],
       floatingActionButton: _tapNum == 0
           ? FloatingActionButton.small(
               onPressed: () => Navigator.push(
@@ -51,12 +43,7 @@ class _FnListPageState extends State<FnListPage> {
             _tapNum = value;
           });
         },
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.map), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.audio_file), label: 'Audio'),
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Map'),
-          BottomNavigationBarItem(icon: Icon(Icons.web), label: 'Web'),
-        ],
+        items: [...(route.map((e) => e["button"]))],
         currentIndex: _tapNum,
         type: BottomNavigationBarType.fixed,
       ),
