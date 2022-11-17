@@ -44,6 +44,7 @@ dependencies:
   card_swiper: ^2.0.4
   sqflite: ^2.2.0+3
   path: ^1.8.2
+  webview_flutter: ^3.0.4
 
 dev_dependencies:
   flutter_test:

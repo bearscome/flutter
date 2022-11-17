@@ -4,6 +4,7 @@ import 'package:flutter_application_4/page/google_map.dart';
 import 'package:flutter_application_4/page/login.dart';
 import 'package:flutter_application_4/page/todoListpage.dart';
 import 'package:flutter_application_4/page/todopage.dart';
+import 'package:flutter_application_4/page/webviewpage.dart';
 import 'package:flutter_application_4/provider/audioProvider.dart';
 import 'package:flutter_application_4/provider/loginProvider.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +24,7 @@ class _FnListPageState extends State<FnListPage> {
       child: const AudioPage(),
     ),
     const GoogleMapPage(),
+    const WebviewPage(),
   ];
   int _tapNum = 0;
 
@@ -53,8 +55,10 @@ class _FnListPageState extends State<FnListPage> {
           BottomNavigationBarItem(icon: Icon(Icons.map), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.audio_file), label: 'Audio'),
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Map'),
+          BottomNavigationBarItem(icon: Icon(Icons.web), label: 'Web'),
         ],
         currentIndex: _tapNum,
+        type: BottomNavigationBarType.fixed,
       ),
     );
   }
