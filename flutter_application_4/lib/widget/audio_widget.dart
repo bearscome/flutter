@@ -51,13 +51,13 @@ class _AudioWidgetState extends State<AudioWidget> {
 
     void setPlayStatus() {
       setState(() {
-        debugPrint('state _player.playing: ${_player.playing}');
         playStatus = _player.playing;
       });
     }
 
     void tapPlay() async {
       debugPrint('state tab play butten ${_player.playing}');
+      setPlayStatus();
       if (_player.playing) {
         debugPrint('state 음악이 켜져 있으므로 정지 ${_player.playing}');
         await _player.pause();
@@ -65,13 +65,12 @@ class _AudioWidgetState extends State<AudioWidget> {
         debugPrint('state 음악이 꺼저 있으므로 시작 ${_player.playing}');
         await _player.play();
       }
-      setPlayStatus();
     }
 
     void loadUrl() async {
+      playStatus = true; // 다음곡 진행 시 강제 적용
       await _player.stop();
       await _player.setUrl(getCurrentData.url, preload: false);
-      setPlayStatus();
     }
 
     void next() async {
@@ -146,8 +145,8 @@ class _AudioWidgetState extends State<AudioWidget> {
                   ),
                   TextButton(
                     onPressed: () => tapPlay(),
-                    // child: Text(playStatus ? '시작' : '멈추기'),
-                    child: Text(playStatus ? '멈추기' : '시작'),
+                    child: Text(playStatus ? '시작' : '멈추기'),
+                    // child: Text(playStatus ? '멈추기' : '시작'),
                     // child: Text(_player.playing ? '멈추기' : '시작'),
                   ),
                   TextButton(

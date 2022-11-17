@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/constants/constants.dart';
-import 'package:flutter_application_4/page/audiopage.dart';
-import 'package:flutter_application_4/page/google_map.dart';
 import 'package:flutter_application_4/page/login.dart';
 import 'package:flutter_application_4/page/todoListpage.dart';
-import 'package:flutter_application_4/page/todopage.dart';
-import 'package:flutter_application_4/page/webviewpage.dart';
-import 'package:flutter_application_4/provider/audioProvider.dart';
 import 'package:flutter_application_4/provider/loginProvider.dart';
 import 'package:provider/provider.dart';
 
@@ -61,9 +56,6 @@ class NavDrawer extends StatelessWidget {
     UserStateProvider userStateProvider =
         Provider.of<UserStateProvider>(context, listen: false);
     String userName = userStateProvider.getUserName;
-    void logout() {
-      userStateProvider.logout();
-    }
 
     return Drawer(
       child: ListView(
@@ -80,7 +72,7 @@ class NavDrawer extends StatelessWidget {
           ),
           ListTile(
             onTap: () {
-              logout();
+              userStateProvider.logout();
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
