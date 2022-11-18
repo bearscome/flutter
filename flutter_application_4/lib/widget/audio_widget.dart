@@ -22,7 +22,13 @@ class _AudioWidgetState extends State<AudioWidget> {
 
   void _init() async {
     _player = AudioPlayer();
-    playStatus = _player.playing;
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await _player.setUrl(
+          'https://archive.org/download/IGM-V7/IGM%20-%20Vol.%207/25%20Diablo%20-%20Tristram%20%28Blizzard%29.mp3',
+          preload: false);
+    });
+
+    playStatus = _player.playing; // false니까 시작하기
     debugPrint('state init ${_player.playing}');
   }
 
@@ -50,6 +56,7 @@ class _AudioWidgetState extends State<AudioWidget> {
           });
 
     void setPlayStatus() {
+      debugPrint("setPlayStatus__player.playing ${_player.playing}");
       setState(() {
         playStatus = _player.playing;
       });
@@ -57,20 +64,24 @@ class _AudioWidgetState extends State<AudioWidget> {
 
     void tapPlay() async {
       debugPrint('state tab play butten ${_player.playing}');
-      setPlayStatus();
       if (_player.playing) {
         debugPrint('state 음악이 켜져 있으므로 정지 ${_player.playing}');
-        await _player.pause();
+        _player.pause(); // false로 변경 -> 시작
+
       } else {
         debugPrint('state 음악이 꺼저 있으므로 시작 ${_player.playing}');
-        await _player.play();
+        // 음악이 실행될 경우 밑의 함수가 안돼...
+        _player.play(); // true로 변경 -> 멈추기
       }
+
+      setPlayStatus();
     }
 
     void loadUrl() async {
-      playStatus = true; // 다음곡 진행 시 강제 적용
-      await _player.stop();
-      await _player.setUrl(getCurrentData.url, preload: false);
+      // playStatus = true; // 다음곡 진행 시 강제 적용
+      _player.stop();
+      _player.setUrl(getCurrentData.url, preload: false);
+      setPlayStatus();
     }
 
     void next() async {
@@ -145,8 +156,8 @@ class _AudioWidgetState extends State<AudioWidget> {
                   ),
                   TextButton(
                     onPressed: () => tapPlay(),
-                    child: Text(playStatus ? '시작' : '멈추기'),
-                    // child: Text(playStatus ? '멈추기' : '시작'),
+                    // child: Text(playStatus ? '시작' : '멈추기'),
+                    child: Text(playStatus ? '멈추기' : '시작'),
                     // child: Text(_player.playing ? '멈추기' : '시작'),
                   ),
                   TextButton(
